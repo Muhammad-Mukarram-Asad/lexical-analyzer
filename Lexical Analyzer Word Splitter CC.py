@@ -1,19 +1,29 @@
 import re
 
 # Below is the code of file reading
+import re
 print("File is given below:")
 a = open("textFile.txt","r")
 b = a.read()
 print(b)
+RE_Keywords = ["auto","break","char","while","while","string","class","include","for","do","print"]
 
 word = []
 lexem = "";
 i = 0
-punctuators = [" ", ",", ";"]
+punctuators = [" ", ",", ";", ":", "_","@","&","$"]
 operators = ['+', '-', '*', '=', '!', '>', '<']
 while(i<len(b)):
+
+    # Agr koi keyword ata hai tou usko ek alag sa token bna da:
+
+    if(b[i] in RE_Keywords):
+        word.append(b[i])
+        word.append(lexem)
+        lexem = ""
     # Punctuators wagera ai tou split krda:
-    if(b[i] in punctuators):
+    elif( (b[i] in punctuators) and (b[i+1] in punctuators) ):
+        word.append(b[i])
         word.append(lexem)
         lexem = ""
 
@@ -61,12 +71,19 @@ while(i<len(b)):
         word.append(lexem)
         lexem= ""
         i+=1
-
+    while("" in word):
+        word.remove("")
+        
         
     else:
         lexem+=b[i]
     i+=1
 print(" The orignal word list is = ",word)
+
+
+
+# Yahan sa extra kaam hua wa hai:
+
 
 # Python3 program for the above approach
 
